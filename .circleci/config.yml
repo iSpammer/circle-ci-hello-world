@@ -12,10 +12,13 @@ jobs:
     steps:
       - run: echo hello
   print_world:
+    environment:
+      MY_ENV_VAR_1: Osama
+
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - run: echo world
+      - run: echo $MY_ENV_VAR_1
 workflows:
   # Name the workflow "welcome"
   welcome:
