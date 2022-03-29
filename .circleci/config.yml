@@ -34,10 +34,10 @@ jobs:
   my_job:
     docker:
       - image: circleci/node:13.8.0
-      steps:
-        - say_hello_world:
-            to: "Meaw!"
-        - print_pipeline_id
+    steps:
+      - say_hello_world:
+          to: "Meaw!"
+      - print_pipeline_id
 
 workflows:
   my_workflow:
