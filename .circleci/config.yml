@@ -8,12 +8,12 @@ commands:
           type: string
           default: "Hello Darkness my old friend"
     steps:
-      - run: echo << parameters.to >>
+      - run: echo "<< parameters.to >>"
   
-  # print_pipeline_id:
-  #   description: "print pipeline id duh"
-  #   steps:
-  #     - run: echo ${CIRCLE_WORKFLOW_ID}
+  print_pipeline_id:
+    description: "print pipeline id duh"
+    steps:
+      - run: echo ${CIRCLE_WORKFLOW_ID}
 
 jobs:
   save_hello_world_output:
@@ -38,7 +38,7 @@ jobs:
     steps:
       - say_hello_world:
           to: "Meaw"
-      # - print_pipeline_id
+      - print_pipeline_id
 
 workflows:
   my_workflow:
