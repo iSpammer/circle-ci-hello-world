@@ -38,11 +38,18 @@ jobs:
       - greeting:
           to: "Meaw"
       - print_pipeline_id
+  will_fail:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: return 1
+      - when: on_fail
 
 workflows:
   my_workflow:
     jobs:
       - my_job
+      - will_fail
       # - save_hello_world_output
       # - print_output_file:
       #     requires:
