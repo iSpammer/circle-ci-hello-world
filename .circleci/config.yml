@@ -1,15 +1,14 @@
 version: 2.1
 
 commands:
-  say_hello_world:
-    description: "a7la mesa 3la f5adk"
+  greeting:
     parameters:
-      - to: 
-          type: string
-          default: "Hello Darkness my old friend"
+      to:
+        default: "world"
+        type: string
     steps:
-      - run: echo "<< parameters.to >>"
-  
+      - run: echo "Hello <<parameters.to>>"
+
   print_pipeline_id:
     description: "print pipeline id duh"
     steps:
@@ -36,7 +35,7 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - say_hello_world:
+      - greeting:
           to: "Meaw"
       - print_pipeline_id
 
