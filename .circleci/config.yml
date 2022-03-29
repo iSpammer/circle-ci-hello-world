@@ -1,17 +1,59 @@
 version: 2.1
 
+commands:
+  greeting:
+    parameters:
+      to:
+        default: "world"
+        type: string
+    steps:
+      - run: echo "Hello <<parameters.to>>"
+
+  print_pipeline_id:
+    description: "print pipeline id duh"
+    steps:
+      - run: echo ${CIRCLE_WORKFLOW_ID}
+
 jobs:
+  save_hello_world_output:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: echo "hello world" > ~/output.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - output.txt
+  print_output_file:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: cat ~/output.txt
   my_job:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - greeting:
+          to: "Meaw"
+      - print_pipeline_id
+  will_fail:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - run: exit 1
       - run:
           name: on error
-          command: echo "Hello Error!"
+          command: echo "Hello Darkness my old friend!"
           when: on_fail
 
 workflows:
   my_workflow:
     jobs:
       - my_job
+      - will_fail
+      # - save_hello_world_output
+      # - print_output_file:
+      #     requires:
+      #       - save_hello_world_output
