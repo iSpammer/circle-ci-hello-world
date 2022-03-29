@@ -6,9 +6,10 @@ commands:
     parameters:
       - to: 
           type: string
-          default: "Hello Darkness my old friend..."
+          default: "Hello Darkness my old friend"
     steps:
       - run: echo << parameters.to >>
+  
   print_pipeline_id:
     description: "print pipeline id duh"
     steps:
