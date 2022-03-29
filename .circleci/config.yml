@@ -1,5 +1,19 @@
 version: 2.1
 
+commands:
+  say_hello_world:
+    description: "a7la mesa 3la f5adk"
+    parameters:
+      - to: 
+          type: string
+          default: "Hello Darkness my old friend..."
+    steps:
+      - run: echo << parameters.to >>
+  print_pipeline_id:
+    description: "print pipeline id duh"
+    steps:
+      - run: echo ${CIRCLE_WORKFLOW_ID}
+
 jobs:
   save_hello_world_output:
     docker:
@@ -10,7 +24,6 @@ jobs:
           root: ~/
           paths:
             - output.txt
-
   print_output_file:
     docker:
       - image: circleci/node:13.8.0
@@ -18,11 +31,19 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: cat ~/output.txt
+  my_job:
+    docker:
+      - image: circleci/node:13.8.0
+      steps:
+        - say_hello_world:
+            to: "Meaw!"
+        - print_pipeline_id
 
 workflows:
   my_workflow:
     jobs:
-      - save_hello_world_output
-      - print_output_file:
-          requires:
-            - save_hello_world_output
+      - my_job
+      # - save_hello_world_output
+      # - print_output_file:
+      #     requires:
+      #       - save_hello_world_output
